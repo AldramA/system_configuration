@@ -1,0 +1,9 @@
+#!/bin/bash
+
+CHOICE=$(/usr/bin/printf '%s\n' "Up" "Down" | /usr/local/bin/dmenu -p Network)
+
+case "$CHOICE" in
+        Up) /usr/bin/doas /usr/sbin/ip link set enp0s25 up && notify-send "Network Connected" ;;
+        Down) /usr/bin/doas /usr/sbin/ip link set enp0s25 down && notify-send "Network Disconnected";;
+esac
+

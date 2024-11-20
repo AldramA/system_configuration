@@ -1,0 +1,26 @@
+# Keybindings configuration
+
+# make sxhkd reload its configuration files:
+super + Escape
+	  pkill -USR1 -x sxhkd
+
+# Open Apps in Terminal
+super + {v, t}
+    st -e {nvim, tmux} 
+
+super + b
+    firefox-developer
+super + c
+    code
+super + shift + BackSpace
+    $HOME/.local/bin/exit.sh
+super + F7
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+super + F8
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+super + F9
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+super + F10
+    pactl set-sink-volume @DEFAULT_SINK@ 100%
+super + shift + p
+    mpv "$(xclip -selection clipboard -o)"

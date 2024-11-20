@@ -1,0 +1,25 @@
+#!/bin/sh
+
+DRIVE=$(lsblk -lp | awk '/part/ && $7 == "" {print $1, "(" $4 ")"}' | dmenu -p "Select a drive to mount:")
+
+if [ -n "$DRIVE" ]; then
+    DRIVE=$(echo "$DRIVE" | awk '{print $1}')
+    
+    # عرض نافذة لاختيار اسم المجلد
+    MOUNT_POINT=$(echo "/mnt/" | dmenu -p "Enter mount point name (default is '$(basename "$DRIVE")'):")
+
+    # استخدم الاسم الافتراضي إذا لم يتم إدخال اسم
+    if [ -z "$MOUNT_POINT" ]; then
+        MOUNT_POINT="/mnt/$(basename "$DRIVE")"
+    else
+        MOUNT_POINT="/mnt/$MOUNT_POINT"
+    fi
+
+    doas mkdir -p "$MOUNT_POINT"
+    doas mount "$DRIVE" "$MOUNT_POINT"
+    echo "Mounted $DRIVE at $MOUNT_POINT"
+else
+    echo "No partition selected."
+    exit 1
+fi
+
